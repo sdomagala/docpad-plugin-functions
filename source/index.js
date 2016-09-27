@@ -30,7 +30,7 @@ export default function (BasePlugin) {
       const events = {};
       docpad.getEvents().forEach((event) => {
         events[event] = (opts, next) => {
-          const tasks = this.getConfig()[eventName];
+          const tasks = this.getConfig()[event];
           if(tasks) {
             series(tasks, next);
           }

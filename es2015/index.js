@@ -48,7 +48,7 @@ exports.default = function (BasePlugin) {
         var events = {};
         docpad.getEvents().forEach(function (event) {
           events[event] = function (opts, next) {
-            var tasks = _this2.getConfig()[eventName];
+            var tasks = _this2.getConfig()[event];
             if (tasks) {
               (0, _series2.default)(tasks, next);
             } else return next();
