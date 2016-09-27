@@ -8,7 +8,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 exports.default = function (BasePlugin) {
 
-  var cl = function (_BasePlugin) {
+  return function (_BasePlugin) {
     _inherits(BaseClass, _BasePlugin);
 
     function BaseClass(opts) {
@@ -25,17 +25,15 @@ exports.default = function (BasePlugin) {
     _createClass(BaseClass, [{
       key: 'attachEvents',
       value: function attachEvents(func) {
-        func.call(this, this.docpad);
+        func.call(this);
       }
-
-      // docpadReady (opts, next) {
-      //   const tasks = this.getConfig()[event];
-      //   if(tasks) {
-      //     series(tasks, next);
-      //   }
-      //   else return next();
-      // }
-
+    }, {
+      key: 'docpadReady',
+      value: function docpadReady(opts, next) {
+        console.log(this, this.name);
+        var tasks = this.getConfig()[event];
+        tasks ? (0, _async2.default)(tasks, next) : next();
+      }
     }, {
       key: 'name',
       get: function get() {
@@ -45,10 +43,6 @@ exports.default = function (BasePlugin) {
 
     return BaseClass;
   }(BasePlugin);
-
-  cl.attachEvents(createEventHandlers);
-
-  return cl;
 };
 
 var _async = require('async');
@@ -63,17 +57,4 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-function createEventHandlers(docpad) {
-  var _this2 = this;
-
-  docpad.getEvents().forEach(function (event) {
-    _this2[event] = function (opts, next) {
-      console.log(event + ' used');
-      var tasks = _this2.getConfig()[event];
-      if (tasks) {
-        async.series(tasks, next);
-      } else return next();
-    };
-  });
-}
 module.exports = exports['default'];
