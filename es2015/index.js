@@ -11,10 +11,15 @@ exports.default = function (BasePlugin) {
   return function (_BasePlugin) {
     _inherits(BaseClass, _BasePlugin);
 
-    function BaseClass() {
+    function BaseClass(opts) {
       _classCallCheck(this, BaseClass);
 
-      return _possibleConstructorReturn(this, (BaseClass.__proto__ || Object.getPrototypeOf(BaseClass)).apply(this, arguments));
+      var _this = _possibleConstructorReturn(this, (BaseClass.__proto__ || Object.getPrototypeOf(BaseClass)).call(this, opts));
+
+      var docpad = opts.docpad;
+
+      _this.createEventHandlers(docpad);
+      return _this;
     }
 
     _createClass(BaseClass, [{
