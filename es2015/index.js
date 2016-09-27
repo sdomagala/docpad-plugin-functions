@@ -11,12 +11,18 @@ exports.default = function (BasePlugin) {
   return function (_BasePlugin) {
     _inherits(BaseClass, _BasePlugin);
 
-    function BaseClass(opts) {
+    function BaseClass(_ref) {
+      var _ref2;
+
+      var docpad = _ref.docpad;
+
       _classCallCheck(this, BaseClass);
 
-      var _this = _possibleConstructorReturn(this, (BaseClass.__proto__ || Object.getPrototypeOf(BaseClass)).call(this, opts));
+      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
 
-      var docpad = opts.docpad;
+      var _this = _possibleConstructorReturn(this, (_ref2 = BaseClass.__proto__ || Object.getPrototypeOf(BaseClass)).call.apply(_ref2, [this].concat(args)));
 
       _this.createEventHandlers(docpad);
       return _this;
@@ -27,9 +33,10 @@ exports.default = function (BasePlugin) {
       value: function createEventHandlers(docpad) {
         var _this2 = this;
 
+        var self = this;
         docpad.getEvents().forEach(function (event) {
           _this2[event] = function (opts, next) {
-            var tasks = _this2.getConfig()[eventName];
+            var tasks = this.getConfig()[eventName];
             if (tasks) {
               (0, _series2.default)(tasks, next);
             } else return next();

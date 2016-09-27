@@ -4,9 +4,8 @@ export default function (BasePlugin) {
 
   return class BaseClass extends BasePlugin {
 
-    constructor(opts) {
-      super(opts);
-      const { docpad } = opts;
+    constructor({docpad}, ...args) {
+      super(...args);
       this.createEventHandlers(docpad);
     }
 
@@ -15,9 +14,9 @@ export default function (BasePlugin) {
     }
 
     createEventHandlers (docpad) {
-
+      const self = this;
       docpad.getEvents().forEach((event) => {
-        this[event] = (opts, next) => {
+        this[event] = function(opts, next) {
           const tasks = this.getConfig()[eventName];
           if(tasks) {
             series(tasks, next);
