@@ -46,7 +46,7 @@ exports.default = function (BasePlugin) {
 
         var self = this;
         var events = {};
-        return docpad.getEvents().forEach(function (event) {
+        docpad.getEvents().forEach(function (event) {
           events[event] = function (opts, next) {
             var tasks = _this2.getConfig()[eventName];
             if (tasks) {
@@ -54,6 +54,8 @@ exports.default = function (BasePlugin) {
             } else return next();
           };
         });
+
+        return events;
       }
     }, {
       key: 'name',

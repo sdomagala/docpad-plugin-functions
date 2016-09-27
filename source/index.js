@@ -28,7 +28,7 @@ export default function (BasePlugin) {
     createEventHandlers (docpad) {
       const self = this;
       const events = {};
-      return docpad.getEvents().forEach((event) => {
+      docpad.getEvents().forEach((event) => {
         events[event] = (opts, next) => {
           const tasks = this.getConfig()[eventName];
           if(tasks) {
@@ -37,6 +37,8 @@ export default function (BasePlugin) {
           else return next();
         };
       });
+
+      return events;
     }
   };
 }
