@@ -2,14 +2,15 @@ import series from 'async/series';
 
 export default function (BasePlugin) {
 
+  let events = {};
+
   return class BaseClass extends BasePlugin {
 
     constructor(opts, ...args) {
       const { docpad } = opts;
       super(opts, ...args);
-      const events = this.createEventHandlers.bind(docpad);
-
-      Object.extend(this, events);
+      events = this.createEventHandlers(docpad);
+      Object.assign(BaseClass, events);
     }
 
     get name () {
@@ -17,7 +18,7 @@ export default function (BasePlugin) {
     }
 
     docpadReady (opts, next) {
-      const tasks = this.getConfig()[eventName];
+      const tasks = this.getConfig()[event];
       if(tasks) {
         series(tasks, next);
       }

@@ -8,6 +8,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 exports.default = function (BasePlugin) {
 
+  var events = {};
+
   return function (_BasePlugin) {
     _inherits(BaseClass, _BasePlugin);
 
@@ -24,16 +26,15 @@ exports.default = function (BasePlugin) {
 
       var _this = _possibleConstructorReturn(this, (_ref = BaseClass.__proto__ || Object.getPrototypeOf(BaseClass)).call.apply(_ref, [this, opts].concat(args)));
 
-      var events = _this.createEventHandlers.bind(docpad);
-
-      Object.extend(_this, events);
+      events = _this.createEventHandlers(docpad);
+      Object.assign(BaseClass, events);
       return _this;
     }
 
     _createClass(BaseClass, [{
       key: 'docpadReady',
       value: function docpadReady(opts, next) {
-        var tasks = this.getConfig()[eventName];
+        var tasks = this.getConfig()[event];
         if (tasks) {
           (0, _series2.default)(tasks, next);
         } else return next();
