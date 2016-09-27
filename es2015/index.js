@@ -31,11 +31,9 @@ exports.default = function (BasePlugin) {
     _createClass(BaseClass, [{
       key: 'createEventHandlers',
       value: function createEventHandlers(docpad) {
-        var _this2 = this;
-
         var self = this;
         docpad.getEvents().forEach(function (event) {
-          _this2[event] = function (opts, next) {
+          self[event] = function (opts, next) {
             var tasks = this.getConfig()[eventName];
             if (tasks) {
               (0, _series2.default)(tasks, next);
