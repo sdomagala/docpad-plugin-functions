@@ -1,16 +1,21 @@
-import series from 'async/series';
+import series from 'async';
 
 export default function (BasePlugin) {
 
-  let events = {};
 
   return class BaseClass extends BasePlugin {
 
     constructor(opts, ...args) {
       const { docpad } = opts;
       super(opts, ...args);
-      events = this.createEventHandlers(docpad);
-      Object.assign(BaseClass, events);
+      this.createEventHandlers(docpad);
+      this.docpadReady = (opts, next) => {
+        const tasks = this.getConfig()[event];
+        if(tasks) {
+          series(tasks, next);
+        }
+        else return next();
+      };
     }
 
     get name () {
@@ -26,13 +31,12 @@ export default function (BasePlugin) {
     // }
 
     createEventHandlers (docpad) {
-      const self = this;
-      const events = {};
       docpad.getEvents().forEach((event) => {
-        events[event] = (opts, next) => {
+        this[event] = (opts, next) => {
+          console.log(`${event} used`);
           const tasks = this.getConfig()[event];
           if(tasks) {
-            series(tasks, next);
+            async.series(tasks, next);
           }
           else return next();
         };

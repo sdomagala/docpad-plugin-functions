@@ -8,8 +8,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 exports.default = function (BasePlugin) {
 
-  var events = {};
-
   return function (_BasePlugin) {
     _inherits(BaseClass, _BasePlugin);
 
@@ -26,8 +24,13 @@ exports.default = function (BasePlugin) {
 
       var _this = _possibleConstructorReturn(this, (_ref = BaseClass.__proto__ || Object.getPrototypeOf(BaseClass)).call.apply(_ref, [this, opts].concat(args)));
 
-      events = _this.createEventHandlers(docpad);
-      Object.assign(BaseClass, events);
+      _this.createEventHandlers(docpad);
+      _this.docpadReady = function (opts, next) {
+        var tasks = _this.getConfig()[event];
+        if (tasks) {
+          (0, _async2.default)(tasks, next);
+        } else return next();
+      };
       return _this;
     }
 
@@ -46,13 +49,12 @@ exports.default = function (BasePlugin) {
       value: function createEventHandlers(docpad) {
         var _this2 = this;
 
-        var self = this;
-        var events = {};
         docpad.getEvents().forEach(function (event) {
-          events[event] = function (opts, next) {
+          _this2[event] = function (opts, next) {
+            console.log(event + ' used');
             var tasks = _this2.getConfig()[event];
             if (tasks) {
-              (0, _series2.default)(tasks, next);
+              async.series(tasks, next);
             } else return next();
           };
         });
@@ -70,9 +72,9 @@ exports.default = function (BasePlugin) {
   }(BasePlugin);
 };
 
-var _series = require('async/series');
+var _async = require('async');
 
-var _series2 = _interopRequireDefault(_series);
+var _async2 = _interopRequireDefault(_async);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
