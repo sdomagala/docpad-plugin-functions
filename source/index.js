@@ -1,6 +1,6 @@
-import series from 'async';
+import async from 'async';
 
-export default function (BasePlugin) {
+module.exports = function (BasePlugin) {
 
 
   return class BaseClass extends BasePlugin {
@@ -21,7 +21,7 @@ export default function (BasePlugin) {
 
     docpadReady (opts, next) {
       const tasks = this.getConfig()['docpadReady'];
-      tasks ? series(tasks, next) : next();
+      tasks ? async.series(tasks, next) : next();
     }
   };
-}
+};
