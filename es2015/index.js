@@ -12,17 +12,11 @@ exports.default = function (BasePlugin) {
     _inherits(BaseClass, _BasePlugin);
 
     function BaseClass(opts) {
-      var _ref;
-
       _classCallCheck(this, BaseClass);
 
       var docpad = opts.docpad;
 
-      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
-
-      var _this = _possibleConstructorReturn(this, (_ref = BaseClass.__proto__ || Object.getPrototypeOf(BaseClass)).call.apply(_ref, [this, opts].concat(args)));
+      var _this = _possibleConstructorReturn(this, (BaseClass.__proto__ || Object.getPrototypeOf(BaseClass)).call(this, opts));
 
       _this.createEventHandlers(docpad);
       return _this;
@@ -52,8 +46,6 @@ exports.default = function (BasePlugin) {
             } else return next();
           };
         });
-
-        return events;
       }
     }, {
       key: 'name',

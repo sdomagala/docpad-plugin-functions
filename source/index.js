@@ -5,9 +5,9 @@ export default function (BasePlugin) {
 
   return class BaseClass extends BasePlugin {
 
-    constructor(opts, ...args) {
+    constructor(opts) {
       const { docpad } = opts;
-      super(opts, ...args);
+      super(opts);
       this.createEventHandlers(docpad);
     }
 
@@ -34,8 +34,6 @@ export default function (BasePlugin) {
           else return next();
         };
       });
-
-      return events;
     }
   };
 }
