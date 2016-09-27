@@ -32,15 +32,17 @@ exports.default = function (BasePlugin) {
     }
 
     _createClass(BaseClass, [{
-      key: 'docpadReady',
-      value: function docpadReady(opts, next) {
-        var tasks = this.getConfig()[event];
-        if (tasks) {
-          (0, _series2.default)(tasks, next);
-        } else return next();
-      }
-    }, {
       key: 'createEventHandlers',
+
+
+      // docpadReady (opts, next) {
+      //   const tasks = this.getConfig()[event];
+      //   if(tasks) {
+      //     series(tasks, next);
+      //   }
+      //   else return next();
+      // }
+
       value: function createEventHandlers(docpad) {
         var _this2 = this;
 

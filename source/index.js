@@ -17,13 +17,13 @@ export default function (BasePlugin) {
       return 'functions';
     }
 
-    docpadReady (opts, next) {
-      const tasks = this.getConfig()[event];
-      if(tasks) {
-        series(tasks, next);
-      }
-      else return next();
-    }
+    // docpadReady (opts, next) {
+    //   const tasks = this.getConfig()[event];
+    //   if(tasks) {
+    //     series(tasks, next);
+    //   }
+    //   else return next();
+    // }
 
     createEventHandlers (docpad) {
       const self = this;
