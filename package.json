@@ -67,9 +67,7 @@
     "release:tag": "git tag v$npm_package_version -a",
     "release:push": "git push origin master && git push origin --tags",
     "pretest": "npm run test:eslint",
-    "test:eslint": "eslint ./source",
-    "test:flow": "flow check",
-    "test": "node --harmony -e \"require('editions').requirePackage(process.cwd(), require, 'test.js')\""
+    "test:eslint": "eslint ./source"
   },
   "dependencies": {
     "async": "^2.0.1"
