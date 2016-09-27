@@ -16,6 +16,14 @@ export default function (BasePlugin) {
       return 'functions';
     }
 
+    docpadReady (opts, next) {
+      const tasks = this.getConfig()[eventName];
+      if(tasks) {
+        series(tasks, next);
+      }
+      else return next();
+    }
+
     createEventHandlers (docpad) {
       const self = this;
       const events = {};
