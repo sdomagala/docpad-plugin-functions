@@ -24,17 +24,22 @@ exports.default = function (BasePlugin) {
 
       var _this = _possibleConstructorReturn(this, (_ref = BaseClass.__proto__ || Object.getPrototypeOf(BaseClass)).call.apply(_ref, [this, opts].concat(args)));
 
-      _this.createEventHandlers(docpad);
+      var events = _this.createEventHandlers.bind(docpad);
+
+      Object.extend(_this, events);
       return _this;
     }
 
     _createClass(BaseClass, [{
       key: 'createEventHandlers',
       value: function createEventHandlers(docpad) {
+        var _this2 = this;
+
         var self = this;
-        docpad.getEvents().forEach(function (event) {
-          self[event] = function (opts, next) {
-            var tasks = this.getConfig()[eventName];
+        var events = {};
+        return docpad.getEvents().forEach(function (event) {
+          events[event] = function (opts, next) {
+            var tasks = _this2.getConfig()[eventName];
             if (tasks) {
               (0, _series2.default)(tasks, next);
             } else return next();

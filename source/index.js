@@ -7,7 +7,9 @@ export default function (BasePlugin) {
     constructor(opts, ...args) {
       const { docpad } = opts;
       super(opts, ...args);
-      this.createEventHandlers(docpad);
+      const events = this.createEventHandlers.bind(docpad);
+
+      Object.extend(this, events);
     }
 
     get name () {
@@ -16,8 +18,9 @@ export default function (BasePlugin) {
 
     createEventHandlers (docpad) {
       const self = this;
-      docpad.getEvents().forEach((event) => {
-        self[event] = function(opts, next) {
+      const events = {};
+      return docpad.getEvents().forEach((event) => {
+        events[event] = (opts, next) => {
           const tasks = this.getConfig()[eventName];
           if(tasks) {
             series(tasks, next);
