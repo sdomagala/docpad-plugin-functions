@@ -18,7 +18,6 @@ out/
 coffeejs/
 coffee/
 es5/
-es2015/
 esnext/
 
 # Editor Caches
