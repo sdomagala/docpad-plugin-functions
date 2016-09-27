@@ -9,13 +9,6 @@ export default function (BasePlugin) {
       const { docpad } = opts;
       super(opts, ...args);
       this.createEventHandlers(docpad);
-      this.docpadReady = (opts, next) => {
-        const tasks = this.getConfig()[event];
-        if(tasks) {
-          series(tasks, next);
-        }
-        else return next();
-      };
     }
 
     get name () {
@@ -32,7 +25,7 @@ export default function (BasePlugin) {
 
     createEventHandlers (docpad) {
       docpad.getEvents().forEach((event) => {
-        this[event] = (opts, next) => {
+        BasePlugin[event] = (opts, next) => {
           console.log(`${event} used`);
           const tasks = this.getConfig()[event];
           if(tasks) {

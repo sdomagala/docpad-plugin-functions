@@ -25,12 +25,6 @@ exports.default = function (BasePlugin) {
       var _this = _possibleConstructorReturn(this, (_ref = BaseClass.__proto__ || Object.getPrototypeOf(BaseClass)).call.apply(_ref, [this, opts].concat(args)));
 
       _this.createEventHandlers(docpad);
-      _this.docpadReady = function (opts, next) {
-        var tasks = _this.getConfig()[event];
-        if (tasks) {
-          (0, _async2.default)(tasks, next);
-        } else return next();
-      };
       return _this;
     }
 
@@ -50,7 +44,7 @@ exports.default = function (BasePlugin) {
         var _this2 = this;
 
         docpad.getEvents().forEach(function (event) {
-          _this2[event] = function (opts, next) {
+          BasePlugin[event] = function (opts, next) {
             console.log(event + ' used');
             var tasks = _this2.getConfig()[event];
             if (tasks) {
