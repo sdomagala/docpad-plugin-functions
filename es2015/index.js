@@ -11,18 +11,18 @@ exports.default = function (BasePlugin) {
   return function (_BasePlugin) {
     _inherits(BaseClass, _BasePlugin);
 
-    function BaseClass(_ref) {
-      var _ref2;
-
-      var docpad = _ref.docpad;
+    function BaseClass(opts) {
+      var _ref;
 
       _classCallCheck(this, BaseClass);
+
+      var docpad = opts.docpad;
 
       for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
         args[_key - 1] = arguments[_key];
       }
 
-      var _this = _possibleConstructorReturn(this, (_ref2 = BaseClass.__proto__ || Object.getPrototypeOf(BaseClass)).call.apply(_ref2, [this].concat(args)));
+      var _this = _possibleConstructorReturn(this, (_ref = BaseClass.__proto__ || Object.getPrototypeOf(BaseClass)).call.apply(_ref, [this, opts].concat(args)));
 
       _this.createEventHandlers(docpad);
       return _this;

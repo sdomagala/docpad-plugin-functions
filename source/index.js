@@ -4,8 +4,9 @@ export default function (BasePlugin) {
 
   return class BaseClass extends BasePlugin {
 
-    constructor({docpad}, ...args) {
-      super(...args);
+    constructor(opts, ...args) {
+      const { docpad } = opts;
+      super(opts, ...args);
       this.createEventHandlers(docpad);
     }
 
