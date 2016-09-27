@@ -3,7 +3,7 @@ import series from 'async';
 export default function (BasePlugin) {
 
 
-  return class BaseClass extends BasePlugin {
+  const cl = class BaseClass extends BasePlugin {
 
     constructor(opts) {
       const { docpad } = opts;
@@ -15,6 +15,10 @@ export default function (BasePlugin) {
       return 'functions';
     }
 
+    attachEvents(func) {
+      func.call(this, this.docpad);
+    }
+
     // docpadReady (opts, next) {
     //   const tasks = this.getConfig()[event];
     //   if(tasks) {
@@ -22,18 +26,22 @@ export default function (BasePlugin) {
     //   }
     //   else return next();
     // }
-
-    createEventHandlers (docpad) {
-      docpad.getEvents().forEach((event) => {
-        BasePlugin[event] = (opts, next) => {
-          console.log(`${event} used`);
-          const tasks = this.getConfig()[event];
-          if(tasks) {
-            async.series(tasks, next);
-          }
-          else return next();
-        };
-      });
-    }
   };
+
+  cl.attachEvents(createEventHandlers);
+
+  return cl;
+}
+
+function createEventHandlers (docpad) {
+  docpad.getEvents().forEach((event) => {
+    this[event] = (opts, next) => {
+      console.log(`${event} used`);
+      const tasks = this.getConfig()[event];
+      if(tasks) {
+        async.series(tasks, next);
+      }
+      else return next();
+    };
+  });
 }
