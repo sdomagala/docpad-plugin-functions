@@ -20,8 +20,7 @@ export default function (BasePlugin) {
     }
 
     docpadReady (opts, next) {
-      console.log(this, this.name);
-      const tasks = this.getConfig()[event];
+      const tasks = this.getConfig()['docpadReady'];
       tasks ? series(tasks, next) : next();
     }
   };

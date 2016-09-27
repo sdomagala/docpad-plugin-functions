@@ -30,8 +30,7 @@ exports.default = function (BasePlugin) {
     }, {
       key: 'docpadReady',
       value: function docpadReady(opts, next) {
-        console.log(this, this.name);
-        var tasks = this.getConfig()[event];
+        var tasks = this.getConfig()['docpadReady'];
         tasks ? (0, _async2.default)(tasks, next) : next();
       }
     }, {
