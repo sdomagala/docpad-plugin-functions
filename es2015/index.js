@@ -15,7 +15,7 @@ module.exports = function (BasePlugin) {
   function FunctionPlugin(opts) {
     var docpad = opts.docpad;
     this.createEventHandlers(docpad);
-    FunctionPlugin.__super__.constructor.apply(this, arguments);
+    FunctionPlugin.__super__.constructor.apply(this, arguments); //equivalent to super(..args) in classes
   }
 
   (0, _extender2.default)(FunctionPlugin, BasePlugin);
@@ -29,7 +29,7 @@ module.exports = function (BasePlugin) {
   FunctionPlugin.prototype.createEventHandlers = function (docpad) {
     var _this = this;
 
-    var eventsToSkip = this.config.eventsToSkip || []; //getConfig() doesn't work while defining plugin, so I had to create config prototype
+    var eventsToSkip = this.config.eventsToSkip || []; //getConfig() doesn't work while defining plugin, so I had to create config prototype - TODO: have to think of better way of defining it
     docpad.getEvents().forEach(function (eventName) {
       if (eventsToSkip.indexOf(eventName) === -1) _this[eventName] = function (opts, next) {
         var tasks = _this.getConfig()[eventName];
