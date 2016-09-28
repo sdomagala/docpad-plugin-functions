@@ -7,7 +7,14 @@ module.exports = function (BasePlugin) {
 
   let FunctionPlugin;
 
-  return GulpPlugin = (function(BasePlugin) {
+  return FunctionPlugin = (function(BasePlugin) {
+
+    function FunctionPlugin(opts) {
+      const docpad = opts.docpad;
+      this.createEventHandlers(docpad);
+      GulpPlugin.__super__.constructor.apply(this, arguments);
+    }
+
     extend(FunctionPlugin, BasePlugin);
 
     FunctionPlugin.prototype.name = 'functions';
@@ -23,11 +30,5 @@ module.exports = function (BasePlugin) {
       })(this));
       return this;
     };
-
-    function FunctionPlugin(opts) {
-      const docpad = opts.docpad;
-      this.createEventHandlers(docpad);
-      GulpPlugin.__super__.constructor.apply(this, arguments);
-    }
   })(BasePlugin);
 };
