@@ -1,8 +1,8 @@
 'use strict';
 
-var _async = require('async');
+var _series = require('async/series');
 
-var _async2 = _interopRequireDefault(_async);
+var _series2 = _interopRequireDefault(_series);
 
 var _extender = require('./extender.js');
 
@@ -29,11 +29,11 @@ module.exports = function (BasePlugin) {
   FunctionPlugin.prototype.createEventHandlers = function (docpad) {
     var _this = this;
 
-    var eventsToSkip = this.config.eventsToSkip || [];
+    var eventsToSkip = this.config.eventsToSkip || []; //getConfig() doesn't work while defining plugin, so I had to create config prototype
     docpad.getEvents().forEach(function (eventName) {
-      if (eventsToSkip.indexOf(eventName) === -1) return _this[eventName] = function (opts, next) {
+      if (eventsToSkip.indexOf(eventName) === -1) _this[eventName] = function (opts, next) {
         var tasks = _this.getConfig()[eventName];
-        tasks && tasks.length ? _async2.default.series(tasks, next) : next();
+        tasks && tasks.length ? (0, _series2.default)(tasks, next) : next();
       };
     });
   };

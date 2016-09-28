@@ -1,4 +1,4 @@
-import async from 'async';
+import series from 'async/series';
 import extend from './extender.js';
 
 module.exports = function (BasePlugin) {
@@ -19,12 +19,12 @@ module.exports = function (BasePlugin) {
 
   FunctionPlugin.prototype.createEventHandlers = function(docpad) {
 
-    const eventsToSkip = this.config.eventsToSkip || [];
+    const eventsToSkip = this.config.eventsToSkip || []; //getConfig() doesn't work while defining plugin, so I had to create config prototype
     docpad.getEvents().forEach((eventName) => {
       if(eventsToSkip.indexOf(eventName) === -1)
-        return this[eventName] = (opts, next) => {
+        this[eventName] = (opts, next) => {
           const tasks = this.getConfig()[eventName];
-          (tasks && tasks.length) ? async.series(tasks, next) : next();
+          (tasks && tasks.length) ? series(tasks, next) : next();
         };
     });
   };
