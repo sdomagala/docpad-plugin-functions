@@ -22,15 +22,17 @@ module.exports = function (BasePlugin) {
 
   FunctionPlugin.prototype.name = 'functions';
 
+  FunctionPlugin.prototype.config = {
+    eventsToSkip: ['render', 'renderDocument']
+  };
+
   FunctionPlugin.prototype.createEventHandlers = function (docpad) {
     var _this = this;
 
-    var config = this.getConfig();
-    if (!config) console.log('Skipping functions plugin due to lack of config file');
-    var eventsToSkip = config.eventsToSkip || [];
+    var eventsToSkip = this.config.eventsToSkip || [];
     docpad.getEvents().forEach(function (eventName) {
       if (eventsToSkip.indexOf(eventName) === -1) return _this[eventName] = function (opts, next) {
-        var tasks = config[eventName];
+        var tasks = _this.getConfig()[eventName];
         tasks && tasks.length ? _async2.default.series(tasks, next) : next();
       };
     });
