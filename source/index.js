@@ -5,7 +5,9 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
 
 module.exports = function (BasePlugin) {
 
-  const FunctionPlugin = (function(BasePlugin) {
+  let FunctionPlugin;
+
+  return GulpPlugin = (function(BasePlugin) {
     extend(FunctionPlugin, BasePlugin);
 
     FunctionPlugin.prototype.name = 'functions';
@@ -28,6 +30,4 @@ module.exports = function (BasePlugin) {
       GulpPlugin.__super__.constructor.apply(this, arguments);
     }
   })(BasePlugin);
-
-  return FunctionPlugin;
 };

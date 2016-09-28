@@ -17,7 +17,9 @@ var extend = function extend(child, parent) {
 
 module.exports = function (BasePlugin) {
 
-  var FunctionPlugin = function (BasePlugin) {
+  var FunctionPlugin = void 0;
+
+  return GulpPlugin = function (BasePlugin) {
     extend(FunctionPlugin, BasePlugin);
 
     FunctionPlugin.prototype.name = 'functions';
@@ -40,6 +42,4 @@ module.exports = function (BasePlugin) {
       GulpPlugin.__super__.constructor.apply(this, arguments);
     }
   }(BasePlugin);
-
-  return FunctionPlugin;
 };
