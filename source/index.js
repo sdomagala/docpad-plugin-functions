@@ -14,15 +14,13 @@ module.exports = function (BasePlugin) {
   FunctionPlugin.prototype.name = 'functions';
 
   FunctionPlugin.prototype.createEventHandlers = function(docpad) {
-    docpad.getEvents().forEach((function(_this) {
-      return function(eventName) {
-        return _this[eventName] = function(opts, next) {
-          const tasks = _this.getConfig()[eventName];
+    docpad.getEvents().forEach((eventName) => {
+      if(['render', 'renderDocument'].indexOf(eventName) === -1)
+        return this[eventName] = (opts, next) => {
+          const tasks = this.getConfig()[eventName];
           tasks ? async.series(tasks, next) : next();
         };
-      };
-    })(this));
-    return this;
+    });
   };
 
   return FunctionPlugin;

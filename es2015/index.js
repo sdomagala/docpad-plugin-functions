@@ -23,15 +23,14 @@ module.exports = function (BasePlugin) {
   FunctionPlugin.prototype.name = 'functions';
 
   FunctionPlugin.prototype.createEventHandlers = function (docpad) {
-    docpad.getEvents().forEach(function (_this) {
-      return function (eventName) {
-        return _this[eventName] = function (opts, next) {
-          var tasks = _this.getConfig()[eventName];
-          tasks ? _async2.default.series(tasks, next) : next();
-        };
+    var _this = this;
+
+    docpad.getEvents().forEach(function (eventName) {
+      if (['render', 'renderDocument'].indexOf(eventName) === -1) return _this[eventName] = function (opts, next) {
+        var tasks = _this.getConfig()[eventName];
+        tasks ? _async2.default.series(tasks, next) : next();
       };
-    }(this));
-    return this;
+    });
   };
 
   return FunctionPlugin;
