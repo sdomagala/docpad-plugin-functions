@@ -14,11 +14,16 @@ module.exports = function (BasePlugin) {
   FunctionPlugin.prototype.name = 'functions';
 
   FunctionPlugin.prototype.createEventHandlers = function(docpad) {
+
+    const config = this.getConfig();
+    if(!config)
+      console.log('Skipping functions plugin due to lack of config file')
+    const eventsToSkip = config.eventsToSkip || [];
     docpad.getEvents().forEach((eventName) => {
-      if(['render', 'renderDocument'].indexOf(eventName) === -1)
+      if(eventsToSkip.indexOf(eventName) === -1)
         return this[eventName] = (opts, next) => {
-          const tasks = this.getConfig()[eventName];
-          tasks ? async.series(tasks, next) : next();
+          const tasks = config[eventName];
+          (tasks && tasks.length) ? async.series(tasks, next) : next();
         };
     });
   };

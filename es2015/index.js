@@ -25,10 +25,13 @@ module.exports = function (BasePlugin) {
   FunctionPlugin.prototype.createEventHandlers = function (docpad) {
     var _this = this;
 
+    var config = this.getConfig();
+    if (!config) console.log('Skipping functions plugin due to lack of config file');
+    var eventsToSkip = config.eventsToSkip || [];
     docpad.getEvents().forEach(function (eventName) {
-      if (['render', 'renderDocument'].indexOf(eventName) === -1) return _this[eventName] = function (opts, next) {
-        var tasks = _this.getConfig()[eventName];
-        tasks ? _async2.default.series(tasks, next) : next();
+      if (eventsToSkip.indexOf(eventName) === -1) return _this[eventName] = function (opts, next) {
+        var tasks = config[eventName];
+        tasks && tasks.length ? _async2.default.series(tasks, next) : next();
       };
     });
   };
