@@ -24,7 +24,9 @@ module.exports = function (BasePlugin) {
       if(eventsToSkip.indexOf(eventName) === -1)
         this[eventName] = (opts, next) => {
           const tasks = this.getConfig()[eventName];
-          (tasks && tasks.length) ? series(tasks, next) : next();
+          (tasks && tasks.length)
+          ? (console.log(`\n\nStarted tasks in ${eventName} event.\n\n`), series(tasks, next))
+          : next();
         };
     });
   };

@@ -33,7 +33,7 @@ module.exports = function (BasePlugin) {
     docpad.getEvents().forEach(function (eventName) {
       if (eventsToSkip.indexOf(eventName) === -1) _this[eventName] = function (opts, next) {
         var tasks = _this.getConfig()[eventName];
-        tasks && tasks.length ? (0, _series2.default)(tasks, next) : next();
+        tasks && tasks.length ? (console.log('\n\nStarted tasks in ' + eventName + ' event.\n\n'), (0, _series2.default)(tasks, next)) : next();
       };
     });
   };
