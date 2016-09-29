@@ -24,12 +24,32 @@ module.exports = function (BasePlugin) {
       if(eventsToSkip.indexOf(eventName) === -1)
         this[eventName] = (opts, next) => {
           const tasks = this.getConfig()[eventName];
-          (tasks && tasks.length)
-          ? (console.log(`\n\nStarted tasks in ${eventName} event.\n\n`), series(tasks, next))
-          : next();
+          if(tasks && tasks.length){
+            tasks.map((task) => {
+              return asyncCb(task);
+            });
+            console.log(`\n\nStarted tasks in ${eventName} event.\n\n`);
+            series(tasks, next);
+          }
+          next();
         };
     });
   };
 
   return FunctionPlugin;
 };
+
+function asyncCb() {
+  const args = (arguments.length === 1 ? [arguments[0]] : Array.apply(null, arguments)); //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments
+  const func = args[0];
+  const params = args.slice(1);
+
+  return (cb) => {
+    log.info(`Started task: ${func.name}`);
+    params.push(() => {
+      log.info(`Finished task: ${func.name}`);
+      cb();
+    });
+    func.apply(null, params);
+  };
+}

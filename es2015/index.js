@@ -33,10 +33,32 @@ module.exports = function (BasePlugin) {
     docpad.getEvents().forEach(function (eventName) {
       if (eventsToSkip.indexOf(eventName) === -1) _this[eventName] = function (opts, next) {
         var tasks = _this.getConfig()[eventName];
-        tasks && tasks.length ? (console.log('\n\nStarted tasks in ' + eventName + ' event.\n\n'), (0, _series2.default)(tasks, next)) : next();
+        if (tasks && tasks.length) {
+          tasks.map(function (task) {
+            return asyncCb(task);
+          });
+          console.log('\n\nStarted tasks in ' + eventName + ' event.\n\n');
+          (0, _series2.default)(tasks, next);
+        }
+        next();
       };
     });
   };
 
   return FunctionPlugin;
 };
+
+function asyncCb() {
+  var args = arguments.length === 1 ? [arguments[0]] : Array.apply(null, arguments); //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments
+  var func = args[0];
+  var params = args.slice(1);
+
+  return function (cb) {
+    log.info('Started task: ' + func.name);
+    params.push(function () {
+      log.info('Finished task: ' + func.name);
+      cb();
+    });
+    func.apply(null, params);
+  };
+}
