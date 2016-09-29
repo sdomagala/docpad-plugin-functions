@@ -23,13 +23,12 @@ module.exports = function (BasePlugin) {
     docpad.getEvents().forEach((eventName) => {
       if(eventsToSkip.indexOf(eventName) === -1)
         this[eventName] = (opts, next) => {
-          const tasks = this.getConfig()[eventName];
+          let tasks = this.getConfig()[eventName];
           if(tasks && tasks.length){
-            tasks.map((task) => {
-              return asyncCb(task);
-            });
-            console.log(`\n\nStarted tasks in ${eventName} event.\n\n`);
-            series(tasks, next);
+
+            tasks = tasks.map((task) => asyncCb(task));
+            return series(tasks, next);
+            
           }
           next();
         };

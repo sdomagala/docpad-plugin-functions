@@ -34,11 +34,11 @@ module.exports = function (BasePlugin) {
       if (eventsToSkip.indexOf(eventName) === -1) _this[eventName] = function (opts, next) {
         var tasks = _this.getConfig()[eventName];
         if (tasks && tasks.length) {
-          tasks.map(function (task) {
+
+          tasks = tasks.map(function (task) {
             return asyncCb(task);
           });
-          console.log('\n\nStarted tasks in ' + eventName + ' event.\n\n');
-          (0, _series2.default)(tasks, next);
+          return (0, _series2.default)(tasks, next);
         }
         next();
       };
