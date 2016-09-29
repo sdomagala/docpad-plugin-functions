@@ -10,6 +10,8 @@ var _extender2 = _interopRequireDefault(_extender);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/* eslint no-console: 0 */
+
 module.exports = function (BasePlugin) {
 
   function FunctionPlugin(opts) {
@@ -54,9 +56,9 @@ function asyncCb() {
   var params = args.slice(1);
 
   return function (cb) {
-    log.info('Started task: ' + func.name);
+    console.log('Started task: ' + func.name);
     params.push(function () {
-      log.info('Finished task: ' + func.name);
+      console.log('Finished task: ' + func.name);
       cb();
     });
     func.apply(null, params);

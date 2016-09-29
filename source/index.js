@@ -1,3 +1,5 @@
+/* eslint no-console: 0 */
+
 import series from 'async/series';
 import extend from './extender.js';
 
@@ -28,7 +30,7 @@ module.exports = function (BasePlugin) {
 
             tasks = tasks.map((task) => asyncCb(task));
             return series(tasks, next);
-            
+
           }
           next();
         };
@@ -44,9 +46,9 @@ function asyncCb() {
   const params = args.slice(1);
 
   return (cb) => {
-    log.info(`Started task: ${func.name}`);
+    console.log(`Started task: ${func.name}`);
     params.push(() => {
-      log.info(`Finished task: ${func.name}`);
+      console.log(`Finished task: ${func.name}`);
       cb();
     });
     func.apply(null, params);
