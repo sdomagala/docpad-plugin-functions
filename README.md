@@ -35,7 +35,8 @@ This plugin was inspired by [docpad-plugin-gulp](https://www.npmjs.com/package/d
 - MAJOR: it's not spawning any child processes so it is 100% compliant with Windows/Unix.
 
 **[AVAILABLE EVENTS](http://docpad.org/docs/events/)**
-*not available `renderDocument`, and `render` since they caused memory spikes and shouldn't be used in this plugin*
+
+*(not available `renderDocument`, and `render` since they caused memory spikes and shouldn't be used in this plugin)*
 
 ### Docpad.coffee structure
 
