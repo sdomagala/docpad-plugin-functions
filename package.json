@@ -1,6 +1,6 @@
 {
   "name": "docpad-plugin-functions",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Start functions between DocPad events",
   "homepage": "https://github.com/sdomagala/docpad-plugin-functions",
   "license": "MIT",
