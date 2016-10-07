@@ -50,7 +50,8 @@
     "url": "http://github.com/sdomagala/docpad-plugin-functions.git"
   },
   "engines": {
-    "node": ">=0.12",
+    "node": ">=4.x",
+    "npm": "3.3.10",
     "docpad": ">=6.x"
   },
   "editions": [
