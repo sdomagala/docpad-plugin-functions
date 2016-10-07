@@ -30,6 +30,49 @@ Install this DocPad plugin by entering <code>docpad install functions</code> int
 
 ## Usage
 
+This plugin was inspired by [docpad-plugin-gulp](https://www.npmjs.com/package/docpad-plugin-gulp) and behaviour of this plugin is almost the same code-wise and in implementation **BUT** with slight differences:
+- you don't need gulp to run it
+- MAJOR: it's not spawning any child processes so it is 100% compliant with Windows/Unix.
+
+**[AVAILABLE EVENTS](http://docpad.org/docs/events/)**
+*not available `renderDocument`, and `render` since they caused memory spikes and shouldn't be used in this plugin*
+
+### Docpad.coffee structure
+
+The following will run function `validateDocuments` during the
+[generateBefore](http://docpad.org/docs/events#generatebefore) event:
+
+```coffeescript
+validateDocuments = require 'validator.js' #this require should be at the top of docpad.coffee
+
+  plugins:
+    functions:
+      generateBefore: [validateDocuments]
+      writeAfter: [asyncFunction1, someOtherAsyncFunction2]
+```
+
+`asyncFunction1` and `someOtherAsyncFunction2` will be run in [series](http://caolan.github.io/async/docs.html#.series)
+
+### Function structure
+
+Every passed function should have following structure **with callback**:
+
+*validator.js*
+```javascript
+function validateDocuments(cb) {
+
+  checkFilesAsynchronously((err) => {
+    cb(err);
+  });
+}
+```
+
+## TO DO
+- support for sync calls
+- mechanism for easy passing arguments to functions
+
+*To be implemented if there is someone to actually use it, so feel free to file issues*
+
 <!-- HISTORY/ -->
 
 <h2>History</h2>
