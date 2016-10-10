@@ -42,7 +42,7 @@ Install this DocPad plugin by entering <code>docpad install functions</code> int
 
 ## Usage
 
-This plugin was inspired by [docpad-plugin-gulp](https://www.npmjs.com/package/docpad-plugin-gulp) and behaviour of this plugin is almost the same code-wise and in implementation **BUT** with slight differences:
+This plugin was inspired by [docpad-plugin-gulp](https://www.npmjs.com/package/docpad-plugin-gulp), behaviour of this plugin is almost the same code-wise and in implementation **BUT** with slight differences:
 - you don't need gulp to run it
 - MAJOR: it's not spawning any child processes so it is 100% compliant with Windows/Unix.
 
